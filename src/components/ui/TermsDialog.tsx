@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Icon } from "../Icon";
 
 interface TermsDialogProps {
@@ -14,52 +14,54 @@ export function TermsDialog({
 }: TermsDialogProps) {
 	const hasBlockedRef = useRef(false);
 
-	useEffect(() => {
-		const doc = document.body.style;
-		const originalOverflow = doc.overflow;
-		const originalTouchAction = doc.touchAction;
-		const originalOverscroll = doc.overscrollBehavior;
+	useLayoutEffect(() => {
+		if (!isOpen) return;
 
-		if (isOpen && !hasBlockedRef.current) {
-			hasBlockedRef.current = true;
-			console.log("Scroll bloqueado", { isOpen });
-			doc.overflow = "hidden";
-			doc.touchAction = "none";
-			doc.overscrollBehavior = "none";
-			console.log("Bloqueado:", { originalOverflow });
-		} else if (!isOpen && hasBlockedRef.current) {
-			hasBlockedRef.current = false;
-			requestAnimationFrame(() => {
-				if (originalOverflow === "") doc.removeProperty("overflow");
-				else doc.overflow = originalOverflow;
+		const html = document.documentElement;
+		const body = document.body;
+		const scrollY = window.scrollY;
 
-				if (originalTouchAction === "") doc.removeProperty("touch-action");
-				else doc.touchAction = originalTouchAction;
-
-				if (originalOverscroll === "")
-					doc.removeProperty("overscroll-behavior");
-				else doc.overscrollBehavior = originalOverscroll;
-			});
-			console.log("Restaurado:", { originalOverflow });
+		const originalStyles = {
+			htmlOverflow: html.style.overflow,
+			htmlOverscrollBehavior: html.style.overscrollBehavior,
+			bodyPosition: body.style.position,
+			bodyTop: body.style.top,
+			bodyLeft: body.style.left,
+			bodyRight: body.style.right,
+			bodyOverflow: body.style.overflow,
+			bodyPaddingRight: body.style.paddingRight,
 		}
 
+		const scrollBarWidth = window.innerWidth - html.clientWidth;
+
+		if (scrollBarWidth > 0) {
+			const currentPadding = Number.parseFloat(getComputedStyle(body).paddingRight) || 0;
+
+			body.style.paddingRight = `${currentPadding + scrollBarWidth}px`;
+		}
+
+		html.style.overflow = "hidden";
+		html.style.overscrollBehavior = "none";
+
+		body.style.position = "fixed";
+		body.style.top = `-${scrollY}px`;
+		body.style.left = "0";
+		body.style.right = "0"
+		body.style.overflow = "hidden";
+
 		return () => {
-			if (hasBlockedRef.current) {
-				hasBlockedRef.current = false;
-				requestAnimationFrame(() => {
-					if (originalOverflow === "") doc.removeProperty("overflow");
-					else doc.overflow = originalOverflow;
+			html.style.overflow = originalStyles.htmlOverflow;
+			html.style.overscrollBehavior = originalStyles.htmlOverscrollBehavior;
+			body.style.position = originalStyles.bodyPosition;
+			body.style.top = originalStyles.bodyTop;
+			body.style.left = originalStyles.bodyLeft;
+			body.style.right = originalStyles.bodyRight;
+			body.style.overflow = originalStyles.bodyOverflow;
+			body.style.paddingRight = originalStyles.bodyPaddingRight;
 
-					if (originalTouchAction === "") doc.removeProperty("touch-action");
-					else doc.touchAction = originalTouchAction;
+			window.scrollTo(0, scrollY)
+		}
 
-					if (originalOverscroll === "")
-						doc.removeProperty("overscroll-behavior");
-					else doc.overscrollBehavior = originalOverscroll;
-				});
-				console.log("Cleanup")
-			}
-		};
 	}, [isOpen]);
 
 	if (!isOpen) {
