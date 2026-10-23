@@ -1,0 +1,220 @@
+## 1. Descripción general de la imagen
+
+La captura muestra una página web de un catálogo comercial con la marca MHY, abierta en Firefox sobre Linux. Las herramientas de desarrollo están abiertas en el lado derecho, ocupando aproximadamente el 40 % de la pantalla.
+
+- Lado izquierdo: interfaz del catálogo.
+- Lado derecho, parte superior: Inspector del DOM de Firefox.
+- Lado derecho, parte central: panel de estilos y propiedades calculadas.
+- Lado derecho, parte inferior: consola de herramientas de desarrollo.
+
+## 2. Interfaz visible del catálogo
+
+MHY
+
+Categorías
+
+¿Que estas buscando hoy?
+
+Productos
+
+Categorías
+
+Nosotros
+
+Área principal vacía del catálogo
+
+La página tiene un encabezado horizontal blanco con una línea divisoria inferior oscura. El logotipo circular es naranja, el buscador es alargado y redondeado, y el área principal tiene un fondo blanco cálido o beige muy claro. No se observan productos ni otros elementos en el contenido principal.
+
+## 3. Transcripción del HTML inspeccionado
+
+En el Inspector se observa una sección del DOM que contiene un campo de búsqueda. La transcripción legible de las líneas visibles es:
+
+```
+<button class="hidden items-center gap-2 text-sm font-bold lg:flex">
+  ...
+</button>
+
+<label class="relative hidden flex-1 md:block">
+  <span class="sr-only">Buscar productos</span>
+
+  <svg
+    class="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-foreground/45"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    ...
+  </svg>
+
+  <input
+    class="h-12 w-full rounded-full border border-border/15 bg-card pl-..."
+    placeholder="¿Que estas buscando hoy?"
+  />
+</label>
+
+<nav class="ml-auto hidden items-center gap-7 text-sm font-semibold lg:flex">
+  ...
+</nav>
+
+<button
+  class="grid size-10 place-items-center rounded-full border border-border/..."
+  aria-label="Abrir menú"
+  aria-expanded="false"
+>
+  ...
+</button>
+```
+
+Importante: los puntos suspensivos representan contenido que no se puede leer completamente en la captura. En particular, las clases del campo `input` y del botón están truncadas por el ancho del panel, por lo que no es posible recuperar sus cadenas completas con certeza.
+
+## 4. Clases Tailwind identificables
+
+Estas son las clases visibles y su función:
+
+| Clase                | Función                                                        |
+| -------------------- | -------------------------------------------------------------- |
+| `hidden`             | Oculta el elemento por defecto.                                |
+| `flex`               | Activa el diseño Flexbox.                                      |
+| `flex-1`             | Permite que el elemento crezca para ocupar espacio disponible. |
+| `items-center`       | Alinea los elementos en el eje transversal.                    |
+| `gap-2`              | Establece separación entre elementos de `0.5rem`.              |
+| `gap-7`              | Establece separación de `1.75rem`.                             |
+| `text-sm`            | Tamaño de texto pequeño.                                       |
+| `font-bold`          | Peso de fuente en negrita.                                     |
+| `font-semibold`      | Peso de fuente seminegrita.                                    |
+| `relative`           | Establece posicionamiento relativo.                            |
+| `absolute`           | Establece posicionamiento absoluto.                            |
+| `left-4`             | Desplazamiento izquierdo de `1rem`.                            |
+| `top-1/2`            | Posición superior del 50 %.                                    |
+| `-translate-y-1/2`   | Desplaza el elemento hacia arriba el 50 % de su propia altura. |
+| `size-5`             | Ancho y alto de `1.25rem`.                                     |
+| `h-12`               | Altura de `3rem`.                                              |
+| `w-full`             | Ancho del 100 %.                                               |
+| `rounded-full`       | Radio de borde completamente redondeado.                       |
+| `border`             | Aplica un borde.                                               |
+| `grid`               | Activa CSS Grid.                                               |
+| `place-items-center` | Centra los elementos dentro de sus celdas de Grid.             |
+| `size-10`            | Ancho y alto de `2.5rem`.                                      |
+| `ml-auto`            | Aplica margen izquierdo automático.                            |
+| `md:block`           | En el breakpoint `md` y superiores, aplica `display: block`.   |
+| `lg:flex`            | En el breakpoint `lg` y superiores, aplica `display: flex`.    |
+
+Los breakpoints exactos dependen de la configuración de Tailwind del proyecto. En una configuración predeterminada moderna, `md` comienza en 48 rem y `lg` en 64 rem.
+
+## 5. Propiedades CSS calculadas del campo seleccionado
+
+En la pestaña Calculado de Firefox se distinguen estas propiedades:
+
+| Propiedad CSS                | Valor mostrado                                    |
+| ---------------------------- | ------------------------------------------------- |
+| `background-color`           | `rgb(255, 255, 255)`                            |
+| `border-bottom-color`        | `rgb(23, 34, 56)`                               |
+| `border-bottom-left-radius`  | `3.40282e38px`                                    |
+| `border-bottom-right-radius` | `3.40282e38px`                                    |
+| `border-bottom-style`        | `solid`                                           |
+| `border-bottom-width`        | `1px`                                             |
+| `border-image-outset`        | `0`                                               |
+| `border-image-repeat`        | `stretch`                                         |
+| `border-image-slice`         | `100%`                                            |
+| `border-image-source`        | `none`                                            |
+| `border-image-width`         | `1`                                               |
+| `border-left-color`          | `rgb(23, 34, 56)`                               |
+| `border-left-style`          | `solid`                                           |
+| `border-left-width`          | `1px`                                             |
+| `border-right-color`         | `rgb(23, 34, 56)`                               |
+| `border-right-style`         | `solid`                                           |
+| `border-right-width`         | `1px`                                             |
+| `border-top-color`           | `rgb(23, 34, 56)`                               |
+| `border-top-left-radius`     | `3.40282e38px`                                    |
+| `border-top-right-radius`    | `3.40282e38px`                                    |
+| `border-top-style`           | `solid`                                           |
+| `border-top-width`           | `1px`                                             |
+| `box-sizing`                 | `border-box`                                      |
+| `color`                      | `rgb(23, 34, 56)`                               |
+| `font-family`                | `"DM Sans", ui-sans-serif, system-ui, sans-serif` |
+
+Detalle técnico: el valor `3.40282e38px` es una representación numérica enorme que Firefox muestra para el radio de borde. En este contexto corresponde al efecto de `rounded-full` de Tailwind, que produce los extremos completamente redondeados del campo de búsqueda.
+
+## 6. Reglas CSS visibles en el panel de estilos
+
+También aparecen fragmentos de reglas relacionadas con el campo:
+
+```
+button,
+input {
+  font: inherit;
+}
+```
+
+```
+* {
+  border-color: var(--border);
+}
+```
+
+Y dentro de las utilidades de Tailwind:
+
+```
+@layer utilities {
+  .outline-none {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
+}
+```
+
+```
+@layer utilities {
+  .transition {
+    transition-property:
+      color,
+      background-color,
+      border-color,
+      outline-color,
+      text-decoration-color,
+      fill,
+      stroke,
+      --tw-gradient-from,
+      --tw-gradient-via,
+      --tw-gradient-to,
+      opacity,
+      box-shadow,
+      transform,
+      translate,
+      scale,
+      rotate,
+      filter,
+      -webkit-backdrop-filter,
+      backdrop-filter,
+      display,
+      content-visibility,
+      overlay,
+      pointer-events;
+  }
+}
+```
+
+Las reglas completas pueden contener más declaraciones que quedan fuera del área visible de la captura.
+
+## 7. Consola y entorno de desarrollo
+
+En la zona inferior de las herramientas de Firefox se leen estos mensajes:
+
+```
+[vite] connecting...
+[vite] connected.
+```
+
+También aparece el mensaje de React:
+
+```
+Download the React DevTools for a better development experience:
+https://react.dev/link/react-devtools
+```
+
+Esto indica que la página está ejecutándose en un entorno de desarrollo con Vite y React. No se observan errores explícitos en la parte de la consola que aparece en la imagen.
+
+Límite de la transcripción: la captura permite identificar la estructura general del encabezado, varias clases Tailwind y propiedades calculadas, pero no contiene suficiente resolución horizontal para recuperar todas las clases HTML ni todo el código fuente original. Esta transcripción distingue los valores legibles de los fragmentos reconstruidos para evitar presentar código inferido como si fuera una copia exacta.
