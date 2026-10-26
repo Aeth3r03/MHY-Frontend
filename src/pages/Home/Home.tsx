@@ -6,6 +6,8 @@ import { categoriesApi } from "../../services/categoryApi";
 import { productsApi } from "../../services/productApi";
 import { ProductCard } from "../../components/ui/ProductCard";
 import { TermsDialog } from "../../components/ui/TermsDialog";
+import { Link, useNavigate } from "react-router-dom";
+import { Footer } from "../../components/Footer";
 
 export function Home() {
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -13,7 +15,17 @@ export function Home() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [activeCategory, setActiveCategory] = useState<string>("Todo");
-	const [showTerms, setShowTerms] = useState(true)
+	const [showTerms, setShowTerms] = useState(() => {
+		if (typeof window === "undefined") return false;
+
+		const showThisSession = sessionStorage.getItem("termsDialogShown");
+		return !showThisSession;
+	})
+	const navigate = useNavigate()
+	const MAX_VISIBLE_CATEGORY = 3;
+	const categoryList = ["Todo", ...categories.map(c => c.name)];
+	const hasMore = categoryList.length > MAX_VISIBLE_CATEGORY
+	const visibleChips = categoryList.slice(0, MAX_VISIBLE_CATEGORY);
 
 	useEffect(() => {
 		async function loadData() {
@@ -40,27 +52,21 @@ export function Home() {
 		loadData();
 	}, []);
 
-	useEffect(() => {
-		const accepted = localStorage.getItem("termsAccepted");
-		if (!accepted) {
-			console.log("Mostrando términos")
-			setShowTerms(true)
-		}
-	}, [])
 
-	const categoryNames = [
-		"Todo",
-		...new Set(products.map((p) => p.categoryName).filter((c): c is string => c !== undefined)),
-	];
 
 	const handleAccept = () => {
-		localStorage.setItem("termsAccepted", "true");
+		sessionStorage.setItem("termsDialogShown", "true")
 		setShowTerms(false)
 	};
 
 	const handleViewFull = () => {
-		handleAccept();
-		
+		sessionStorage.setItem("termsDialogShown", "true")
+		setShowTerms(false)
+		handleViewTerms();
+	}
+
+	const handleViewTerms = () => {
+		navigate("/terms")
 	}
 
 	const visibleProducts = useMemo(() => {
@@ -157,7 +163,10 @@ export function Home() {
 									garantías para evitar problemas o confusiones.
 								</p>
 							</div>
-							<button className="group mx-5 mb-5 flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-black text-white transition hover:bg-primary/90 md:mb-0 md:mr-5 md:whitespace-nowrap">
+							<button 
+								className="group mx-5 mb-5 flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-black text-white transition hover:bg-primary/90 md:mb-0 md:mr-5 md:whitespace-nowrap"
+								onClick={handleViewTerms}
+								>
 								Leer los Términos de Servicio
 								<Icon
 									name="arrow"
@@ -168,7 +177,7 @@ export function Home() {
 					</section>
 					<div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
 						<div className="flex gap-2 overflow-x-auto pb-3 -mx-4 px-4">
-							{categoryNames.map((cat) => (
+							{visibleChips.map((cat) => (
 								<button
 									key={cat}
 									onClick={() => setActiveCategory(cat)}
@@ -177,6 +186,15 @@ export function Home() {
 									{cat}
 								</button>
 							))}
+							{hasMore && (
+								<Link
+									to="/categories"
+									className="flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold transition border-foreground/10 bg-card hover:border-foreground/35"
+								>
+									Ver todas las categorías
+									<Icon name="arrow" className="size-4" />
+								</Link>
+							)}
 						</div>
 					</div>
 					<section

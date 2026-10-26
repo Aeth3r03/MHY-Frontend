@@ -12,8 +12,6 @@ export function TermsDialog({
 	onAccept,
 	onViewFull,
 }: TermsDialogProps) {
-	const hasBlockedRef = useRef(false);
-
 	useLayoutEffect(() => {
 		if (!isOpen) return;
 

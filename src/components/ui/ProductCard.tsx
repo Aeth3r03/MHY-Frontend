@@ -1,4 +1,5 @@
 import { formatPrice } from "../../lib/currency";
+import { placeholderFallback } from "../../lib/imagePlaceholder";
 import type { Product } from "../../types/product";
 import { Icon } from "../Icon";
 
@@ -15,7 +16,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <article className="group overflow-hidden rounded-2xl bg-card shadow-[0_8px_30px_rgba(23,34,56,0.07)]">
             <div className="relative aspect-square overflow-hidden bg-muted">
                 <img
-                    src={product.imageUrl || ""}
+                    src={product.imageUrl || placeholderFallback}
                     alt={product.name}
                     className="size-full object-cover transition duration-500 group-hover:scale-105"
                 />

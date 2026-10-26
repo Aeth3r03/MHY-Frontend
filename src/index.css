@@ -14,6 +14,12 @@
   --popover: #ffffff;
   --popover-foreground: #172238;
 
+  --button: #F2F0E8;
+  --bord-button: #E2DED3;
+
+  --footer: #10192a;
+  --footer-top: #172238;
+
   --primary: #ff5c45;
   --primary-foreground: #ffffff;
 
@@ -67,6 +73,12 @@
 @theme inline {
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
+
+  --color-button: var(--button);
+  --color-bord-button: var(--bord-button);
+
+  --color-footer: var(--footer);
+  --color-footer-top: var(--footer-top);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -1,0 +1,1 @@
+export const placeholderFallback = "https://api.getpronto.io/v1/file/user-cmurjzh7y147199td9r49hxfog/placeholder-fallback-1792962189249-707f2c5082ec77d5.png"
