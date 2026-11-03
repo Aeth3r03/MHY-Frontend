@@ -1,100 +1,50 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Icon } from "../../components/Icon";
-import type { Category } from "../../types/category";
-import type { Product } from "../../types/product";
-import { categoriesApi } from "../../services/categoryApi";
-import { productsApi } from "../../services/productApi";
 import { ProductCard } from "../../components/ui/ProductCard";
 import { TermsDialog } from "../../components/ui/TermsDialog";
 import { Link, useNavigate } from "react-router-dom";
-import { Footer } from "../../components/Footer";
+import { LoadingBody } from "../../components/ui/LoadingBody";
+import { usePaginatedProducts } from "../../hooks/usePaginatedProducts";
+import { useCategories } from "../../hooks/useCategories";
+import { logAnalyticsEvent } from "../../services/firebase";
 
 export function Home() {
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [products, setProducts] = useState<Product[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
 	const [activeCategory, setActiveCategory] = useState<string>("Todo");
+	const { categories, categoryNameById } = useCategories()
+	const categoryList = ["Todo", ...categories.map((c) => c.name)];
+	const navigate = useNavigate();
+
+
+	const { products, loading } = usePaginatedProducts({
+		pageSize: 8,
+	});
+
 	const [showTerms, setShowTerms] = useState(() => {
 		if (typeof window === "undefined") return false;
 
 		const showThisSession = sessionStorage.getItem("termsDialogShown");
 		return !showThisSession;
-	})
-	const navigate = useNavigate()
-	const MAX_VISIBLE_CATEGORY = 3;
-	const categoryList = ["Todo", ...categories.map(c => c.name)];
-	const hasMore = categoryList.length > MAX_VISIBLE_CATEGORY
-	const visibleChips = categoryList.slice(0, MAX_VISIBLE_CATEGORY);
-
-	useEffect(() => {
-		async function loadData() {
-			try {
-				setLoading(true);
-				const [cats, prods] = await Promise.all([
-					categoriesApi.getCategories(),
-					productsApi.getProducts(),
-				]);
-				const categoryMap = new Map(cats.map((c) => [c.id, c.name]));
-				const productsWithCategory = prods.map((p) => ({
-					...p,
-					categoryName: categoryMap.get(p.categoryId) || "Sin categoría",
-				}));
-				setCategories(cats);
-				setProducts(productsWithCategory);
-			} catch (e) {
-				setError("No se pudieron cargar los datos");
-				console.error(e);
-			} finally {
-				setLoading(false);
-			}
-		}
-		loadData();
-	}, []);
-
-
+	});
 
 	const handleAccept = () => {
-		sessionStorage.setItem("termsDialogShown", "true")
-		setShowTerms(false)
+		sessionStorage.setItem("termsDialogShown", "true");
+		setShowTerms(false);
 	};
 
 	const handleViewFull = () => {
-		sessionStorage.setItem("termsDialogShown", "true")
-		setShowTerms(false)
+		sessionStorage.setItem("termsDialogShown", "true");
+		setShowTerms(false);
 		handleViewTerms();
-	}
+	};
 
 	const handleViewTerms = () => {
-		navigate("/terms")
-	}
-
-	const visibleProducts = useMemo(() => {
-		if (activeCategory === "Todo") {
-			const grouped = products.reduce(
-				(acc, p) => {
-					const cat = p.categoryName || "Sin categoría";
-					if (!acc[cat]) acc[cat] = [];
-					if (acc[cat].length < 2) {
-						acc[cat].push(p);
-					}
-					return acc;
-				},
-				{} as Record<string, Product[]>,
-			);
-			return Object.values(grouped).flat();
-		}
-		return products
-			.filter((p) => p.categoryName === activeCategory)
-			.slice(0, 5);
-	}, [products, activeCategory]);
+		navigate("/terms");
+	};
 
 	return (
 		<main>
 			{loading ? (
-				<div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
-					<div className="size-12 animate-spin rounded-full border-4 border-accent border-t-accent/55" />
-				</div>
+				<LoadingBody />
 			) : (
 				<div>
 					<section className="mx-auto max-w-7xl px-4 pb-4 pt-6 sm:px-6 lg:px-8">
@@ -105,25 +55,25 @@ export function Home() {
 								</span>
 								<h1 className="max-w-2xl font-serif text-5xl font-bold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
 									Lo que necesitas,{" "}
-									<span className="italic text-destructive">
+									<span className="italic text-green-600">
 										todo en un solo lugar
 									</span>
 								</h1>
 								<p className="mt-7 max-w-lg text-base leading-7 text-foreground/75 sm:text-lg">
-									Productos útiles, precios justos, de confíanza y buena
+									Productos útiles, precios justos, de confanza y buena
 									atención
 								</p>
 								<div className="mt-9 flex flex-wrap gap-3">
-									<button className="group flex items-center gap-3 rounded-full bg-foreground px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-foreground/90">
+									<Link to="/products" className="group flex items-center gap-3 rounded-full bg-foreground px-6 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-foreground/90">
 										Ver productos
 										<Icon
 											name="arrow"
 											className="size-4 transition-transform group-hover:translate-x-1"
 										/>
-									</button>
-									<button className="rounded-full border border-foreground/25 bg-white/80 px-6 py-3.5 text-sm font-black transition hover:-translate-y-0.5 hover:bg-white">
+									</Link>
+									<Link to="/faq#como-comprar" onClick={() => logAnalyticsEvent("how_buy_click")} className="rounded-full border border-foreground/25 bg-white/80 px-6 py-3.5 text-sm font-black transition hover:-translate-y-0.5 hover:bg-white">
 										Cómo comprar
-									</button>
+									</Link>
 								</div>
 							</div>
 							<div className="relative min-h-90 overflow-hidden lg:min-h-full">
@@ -163,10 +113,10 @@ export function Home() {
 									garantías para evitar problemas o confusiones.
 								</p>
 							</div>
-							<button 
+							<button
 								className="group mx-5 mb-5 flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-black text-white transition hover:bg-primary/90 md:mb-0 md:mr-5 md:whitespace-nowrap"
 								onClick={handleViewTerms}
-								>
+							>
 								Leer los Términos de Servicio
 								<Icon
 									name="arrow"
@@ -177,16 +127,18 @@ export function Home() {
 					</section>
 					<div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
 						<div className="flex gap-2 overflow-x-auto pb-3 -mx-4 px-4">
-							{visibleChips.map((cat) => (
-								<button
-									key={cat}
-									onClick={() => setActiveCategory(cat)}
-									className={`flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold transition ${activeCategory === cat ? "border-foreground bg-foreground text-white" : "border-foreground/10 bg-card hover:border-foreground/35"}`}
-								>
-									{cat}
-								</button>
-							))}
-							{hasMore && (
+							{["Todo", ...(categories?.map((c) => c.name) ?? [])]
+								.slice(0, 3)
+								.map((cat) => (
+									<button
+										key={cat}
+										onClick={() => setActiveCategory(cat)}
+										className={`flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold transition ${activeCategory === cat ? "border-foreground bg-foreground text-white" : "border-foreground/10 bg-card hover:border-foreground/35"}`}
+									>
+										{cat}
+									</button>
+								))}
+							{categoryList.length > 3 && (
 								<Link
 									to="/categories"
 									className="flex shrink-0 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold transition border-foreground/10 bg-card hover:border-foreground/35"
@@ -203,7 +155,7 @@ export function Home() {
 					>
 						<div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end mb-6">
 							<div>
-								<p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-destructive">
+								<p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-primary">
 									Explora nuestra tienda
 								</p>
 								<h2 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl">
@@ -212,10 +164,10 @@ export function Home() {
 							</div>
 						</div>
 
-						{visibleProducts.length > 0 ? (
+						{products.length > 0 ? (
 							<div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-								{visibleProducts.map((product) => (
-									<ProductCard key={product.id} product={product} />
+								{products.map((product) => (
+									<ProductCard key={product.id} product={product} categoryName={categoryNameById.get(product.categoryId)} />
 								))}
 							</div>
 						) : (
@@ -225,12 +177,29 @@ export function Home() {
 								</p>
 							</div>
 						)}
+
+						<div className="mt-14 mb-10 flex flex-col items-center justify-between gap-5 border-t border-foreground/10 pt-8 sm:flex-row sm:items-center">
+							<div>
+								<p className="font-serif text-2xl font-bold">
+									¿Quieres verlo todo?
+								</p>
+								<p className="mt-1 text-base text-gray-500">
+									Abre el catálogo completo y filtra
+								</p>
+							</div>
+							<Link
+								to="/products"
+								className="group flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-black text-white transition hover:bg-primary/90"
+							>
+								Ver todos los productos <Icon name="arrow" className="size-4 transition-transform group-hover:translate-x-1" />
+							</Link>
+						</div>
 					</section>
 					<TermsDialog
-							isOpen={showTerms}
-							onAccept={handleAccept}
-							onViewFull={handleViewFull}
-						/>
+						isOpen={showTerms}
+						onAccept={handleAccept}
+						onViewFull={handleViewFull}
+					/>
 				</div>
 			)}
 		</main>

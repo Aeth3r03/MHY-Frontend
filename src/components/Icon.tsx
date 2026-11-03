@@ -1,6 +1,6 @@
 import type React from "react"
 
-type IconName = "menu" | "close" | "cart" | "search" | "arrow" | "shield" | "truck" | "headset" | "box" | "phone" | "kitchen" | "shirt" | "home" | "sparkles" | "heart" | "plus" | "telephone"
+type IconName = "menu" | "close" | "filterX" | "cart" | "search" | "arrow" | "shield" | "truck" | "headset" | "box" | "phone" | "kitchen" | "shirt" | "home" | "sparkles" | "heart" | "plus" | "telephone" | "filter" | "chevron" | "check"
 
 interface IconProps {
     name: IconName
@@ -25,7 +25,10 @@ const paths: Record<IconName, React.ReactNode> = {
     sparkles: <><path d="m12 3 1.3 3.7L17 8l-3.7 1.3L12 13l-1.3-3.7L7 8l3.7-1.3L12 3ZM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14ZM19 13l.7 1.3L21 15l-1.3.7L19 17l-.7-1.3L17 15l1.3-.7L19 13Z" /></>,
     heart: <path d="M20.8 8.6c0 5.2-8.8 10.4-8.8 10.4S3.2 13.8 3.2 8.6A4.6 4.6 0 0 1 12 6.7a4.6 4.6 0 0 1 8.8 1.9Z" />,
     plus: <><path d="M12 5v14M5 12h14" /></>,
-
+    filter: <><path d="M4 6h16M4 12h16M4 18h16" /><circle cx="9" cy="6" r="2" /><circle cx="15" cy="12" r="2" /><circle cx="10" cy="18" r="2" /></>,
+    chevron: <path d="m6 9 6 6 6-6" />,
+    check: <path d="m5 12 4 4L19 6" />,
+    filterX: <><path d="M4 4h16l-6.5 7.5V19l-3 1v-7.5L4 4Z" /><path d="m17 16 4 4m0-4-4 4" /></>,
 }
 
 export function Icon({ name, className = "size-5" }: IconProps) {

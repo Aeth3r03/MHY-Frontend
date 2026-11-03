@@ -4,6 +4,7 @@ import type { TermsServiceContent } from "../../types/termsService";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "../../components/Icon";
 import Markdown from "react-markdown";
+import { LoadingBody } from "../../components/ui/LoadingBody";
 
 export function TermsPage() {
     const [terms, setTerms] = useState<TermsServiceContent | null>(null)
@@ -27,9 +28,7 @@ export function TermsPage() {
 
    if (loading) {
     return (
-        <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
-            <div className="size-12 animate-spin rounded-full border-4 border-accent border-t-accent/55" />
-        </div>
+        <LoadingBody />
     );
    }
 
@@ -53,7 +52,7 @@ export function TermsPage() {
                 <Icon name="shield" className="size-4" />
                 Lee esta información antes de comprar
             </div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-destructive mb-2">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-2">
                 Bienvenido a MultiHogar Yadita
             </p>
             <h1 className="font-serif text-3xl font-bold sm:text-4xl">

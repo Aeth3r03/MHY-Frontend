@@ -20,7 +20,7 @@
   --footer: #10192a;
   --footer-top: #172238;
 
-  --primary: #ff5c45;
+  --primary: #16A36A;
   --primary-foreground: #ffffff;
 
   --secondary: #f1efe5;
@@ -29,7 +29,7 @@
   --muted: #eeeae0;
   --muted-foreground: #172238;
 
-  --accent: #f0b938;
+  --accent: #6BDDA8;
   --accent-foreground: #172238;
 
   --destructive: #d83d2d;
@@ -50,7 +50,7 @@
   --popover: #172238;
   --popover-foreground: #fbfaf5;
 
-  --primary: #ff5c45;
+  --primary: #16A36A;
   --primary-foreground: #ffffff;
 
   --secondary: #1f2d45;
@@ -111,6 +111,54 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.5);
   --radius-2xl: calc(var(--radius) * 2);
+
+  --animate-ring: ring 0.6s ease-in-out;
+
+  @keyframes ring {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+
+    20%, 60% {
+      transform: rotate(-6deg);
+    }
+
+    40%, 80% {
+      transform: rotate(6deg);
+    }
+  }
+}
+
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::marker {
+  display: none;
+}
+
+details[open] summary {
+  border-bottom-color: transparent;
+}
+details[open] dd {
+  animation: slideDown 0.2s ease-out;
+}
+details[open] summary .group-open\:rotate-180 {
+  transform: rotate(180deg);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 4. Base styles */

@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { Icon } from "./Icon";
 import { MenuButton } from "./MenuButton";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { SearchAutoComplete } from "./ui/SearchAutocomplete";
+import { useCategories } from "../hooks/useCategories";
+import { logAnalyticsEvent } from "../services/firebase";
 
 export function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [searchValue, setSearchValue] = useState("")
 	const navigate = useNavigate();
+	const { categoryNameById } = useCategories()
+
+	const handleSearchSubmit = (value: string) => {
+		if (value.trim()) navigate(`/products?search=${encodeURIComponent(value.trim())}`)
+	}
 
 	const handleTermsButton = () => {
 		setMenuOpen(false)
@@ -18,6 +26,26 @@ export function Header() {
 		navigate("/categories")
 	}
 
+	const handleHomeButton =  () => {
+		setMenuOpen(false)
+		navigate("/")
+	}
+
+	const handleAboutButton = () => {
+		setMenuOpen(false)
+		navigate("/about")
+	}
+
+	const handleProductsButton = () => {
+		setMenuOpen(false)
+		navigate("/products")
+	}
+
+	const handleFaqButton = () => {
+		setMenuOpen(false)
+		navigate("/faq")
+	}
+ 
 	return (
 		<header className="sticky top-0 z-40 border-b border-border/10 bg-background backdrop-blur-xl">
 			<div className="mx-auto flex h-18 max-w-7xl items-center gap-3 px-4 sm:h-20 sm:gap-5 sm:px-6 lg:px-8 justify-between">
@@ -37,22 +65,18 @@ export function Header() {
 					</span>
 				</button>
 
-				<label className="relative hidden flex-1 md:block">
-					<span className="sr-only">Buscar productos</span>
-					<Icon
-						name="search"
-						className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-foreground/45"
+				<div className="relative hidden flex-1 md:block">
+					<SearchAutoComplete
+						value={searchValue}
+						onChange={setSearchValue}
+						onSubmit={handleSearchSubmit}
+						categoryNameById={categoryNameById}
+						className="focus:border-primary"
 					/>
-					<input
-						// value={}
-						// onChange={}
-						className="h-12 w-full rounded-full border border-border/15 bg-card pl-12 pr-5 text-sm outline-none transition focus:border-ring focus:ring-1 focus:ring-ring"
-						placeholder="Buscar en MultiHogar Yadita..."
-					/>
-				</label>
+				</div>
 
 				<nav className="ml-auto hidden items-center gap-7 text-sm font-semibold lg:flex">
-					<button className="transition-colors hover:text-primary">
+					<button className="transition-colors hover:text-primary" onClick={() => navigate("/products")}>
 						Productos
 					</button>
 
@@ -60,24 +84,26 @@ export function Header() {
 						Categorías
 					</button>
 
-					<button className="transition-colors hover:text-primary">
+					<button className="transition-colors hover:text-primary" onClick={() => {navigate("/about"), logAnalyticsEvent("about_us_click")}}>
 						Nosotros
+					</button>
+
+					<button className="transition-colors hover:text-primary" onClick={() => {navigate("/faq"), logAnalyticsEvent("faq_click")}}>
+						Preguntas
 					</button>
 				</nav>
 				<MenuButton isOpen={menuOpen} onToggle={setMenuOpen} />
 			</div>
 			<div className="md:hidden px-4 pb-4">
-				<label className="relative block">
-					<span className="sr-only">Buscar productos</span>
-					<Icon
-						name="search"
-						className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-foreground/45"
-					/>
-					<input
-						className="h-12 w-full rounded-full border border-border bg-card pl-12 pr-5 text-sm outline-none transition focus:border-ring focus:ring-1 focus:ring-ring"
+				<div className="relative block">
+					<SearchAutoComplete
+						value={searchValue}
+						onChange={setSearchValue}
+						onSubmit={handleSearchSubmit}
 						placeholder="Buscar en MultiHogar Yadita..."
+						categoryNameById={categoryNameById}
 					/>
-				</label>
+				</div>
 			</div>
 
 			<AnimatePresence initial={false}>
@@ -109,6 +135,12 @@ export function Header() {
 					>
 						<div className="px-4 py-4">
 							<div className="mx-auto flex max-w-7xl flex-wrap gap-2">
+								<button 
+									className="rounded-full border border-bord-button bg-button px-4 py-2 text-sm font-bold"
+									onClick={handleHomeButton}	
+								>
+									Inicio
+								</button>
 								<button
 									className="rounded-full border border-bord-button bg-button  px-4 py-2 text-sm font-bold"
 									onClick={handleCategoryButton}
@@ -117,9 +149,24 @@ export function Header() {
 								</button>
 
 								<button
-									 className="rounded-full border border-bord-button bg-button px-4 py-2 text-sm font-bold"
+									className="rounded-full border border-bord-button bg-button px-4 py-2 text-sm font-bold"
+									onClick={handleProductsButton}
 								>
 									Productos
+								</button>
+
+								<button
+									className="rounded-full border border-bord-button bg-button px-4 py-2 text-sm font-bold"
+									onClick={handleAboutButton}
+								>
+									Nosotros
+								</button>
+
+								<button
+									className="rounded-full border border-bord-button bg-button px-4 py-2 text-sm font-bold"
+									onClick={handleFaqButton}
+								>
+									Preguntas
 								</button>
 
 								<button

@@ -1,55 +1,30 @@
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import type { Category } from "../../types/category";
-import { categoriesApi } from "../../services/categoryApi";
 import { Icon } from "../../components/Icon";
 import { placeholderFallback } from "../../lib/imagePlaceholder";
+import { LoadingBody } from "../../components/ui/LoadingBody";
+import { useCategories } from "../../hooks/useCategories";
 
 export function CategoriesPage() {
 	const navigate = useNavigate();
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		async function load() {
-			try {
-				const data = await categoriesApi.getCategories();
-				setCategories(data);
-			} catch (e) {
-				console.error("Error:", e);
-			} finally {
-				setLoading(false);
-			}
-		}
-		load();
-	}, []);
+	const {categories, loading} = useCategories();
 
 
 	if (loading) {
 		return (
-			<div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-6">
-				<div className="size-12 animate-spin rounded-full border-4 border-accent border-t-accent/55" />
-			</div>
+			<LoadingBody />
 		);
 	}
 
 	return (
 		<main>
 			<section className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pt-14 lg:px-8">
-				<button
-					onClick={() => navigate("/")}
-					className="flex items-center gap-2 text-sm font-black text-foreground/65 transition hover:text-primary"
-				>
-					<Icon name="arrow" className="size-4 rotate-180" /> Volver a la tienda
-				</button>
-
-				<div className="mt-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+				<div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
 					<div>
-						<p className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-destructive">
+						<p className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-primary">
 							Compra a tu manera
 						</p>
 						<h1 className="max-w-3xl font-serif text-5xl font-bold leading-[1.02] tracking-[-0.04em] sm:text-6xl">
-							Todo lo que buscas, <span className="italic text-destructive">en un solo lugar.</span>
+							Todo lo que buscas, <span className="italic text-primary">en un solo lugar.</span>
 						</h1>
 						<p className="mt-5 max-w-2xl text-base leading-7 text-foreground/65 sm:text-lg">
 							Elige una categoría para ir directamente a sus productos. Luego puedes usar el buscador para encontrar algo específico.
@@ -61,9 +36,9 @@ export function CategoriesPage() {
 					{categories.map((cat, index) => {
 
 						return (
-						<Link
+						<button
 							key={cat.id}
-							to={`/categoria/${cat.name}`}
+							onClick={() => navigate(`/products?category=${encodeURIComponent(cat.name)}`)}
 							className={`group relative min-h-100 overflow-hidden rounded-[1.75rem] text-left shadow-[0_12px_35px_rgba(23,34,56,0.1)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(23,34,56,0.16)] ${
 								index < 2 ? "lg:col-span-3" : "lg:col-span-2"
 							}`}
@@ -94,7 +69,7 @@ export function CategoriesPage() {
 									</span>
 								</span>
 							</span>
-						</Link>)
+						</button>)
 					})}
 				</div>
 

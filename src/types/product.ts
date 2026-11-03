@@ -7,7 +7,6 @@ export interface Product {
     price: number
     currency: Currency
     categoryId: string
-    categoryName?: string
     available: boolean
     imageUrl?: string
     imageId?: string
