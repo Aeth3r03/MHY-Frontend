@@ -14,9 +14,11 @@ export function Home() {
 	const categoryList = ["Todo", ...categories.map((c) => c.name)];
 	const navigate = useNavigate();
 
+	const selectedCategoryId = activeCategory === "Todo" ? undefined : categories.find((category) => category.name === activeCategory)?.id
 
 	const { products, loading } = usePaginatedProducts({
-		pageSize: 8,
+		pageSize: 4,
+		categoryId: selectedCategoryId,
 	});
 
 	const [showTerms, setShowTerms] = useState(() => {
@@ -43,10 +45,7 @@ export function Home() {
 
 	return (
 		<main>
-			{loading ? (
-				<LoadingBody />
-			) : (
-				<div>
+			<div>
 					<section className="mx-auto max-w-7xl px-4 pb-4 pt-6 sm:px-6 lg:px-8">
 						<div className="grid min-h-145 overflow-hidden rounded-4xl bg-accent lg:grid-cols-[1.04fr_.96fr]">
 							<div className="relative z-12 flex flex-col justify-center px-6 py-14 sm:px-12 lg:px-16">
@@ -150,7 +149,7 @@ export function Home() {
 						</div>
 					</div>
 					<section
-						id="productos"
+						id="products"
 						className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8"
 					>
 						<div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end mb-6">
@@ -164,7 +163,11 @@ export function Home() {
 							</div>
 						</div>
 
-						{products.length > 0 ? (
+						{loading ? (
+							<div className="flex items-center justify-center p-4">
+								<div className="size-12 animate-spin rounded-full border-4 border-accent border-t-accent/55" />
+							</div>
+						) : products.length > 0 ? (
 							<div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
 								{products.map((product) => (
 									<ProductCard key={product.id} product={product} categoryName={categoryNameById.get(product.categoryId)} />
@@ -201,7 +204,6 @@ export function Home() {
 						onViewFull={handleViewFull}
 					/>
 				</div>
-			)}
 		</main>
 	);
 }

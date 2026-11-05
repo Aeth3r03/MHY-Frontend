@@ -13,7 +13,7 @@ interface ProductCardProps {
 export function ProductCard({ product, categoryName }: ProductCardProps) {
 
     const whatsappMessage = encodeURIComponent(
-        `Hola, me interesa: ${product.name} (${formatPrice(product.price, product.currency)}). Quiero mas info. (Url de la imagen: ${product.imageUrl})`
+        `Hola, me interesa: ${product.name} (${formatPrice(product.price, product.currency)}). Quiero mas info.\n\n(Url de la imagen: ${product.imageUrl})`
     );
     const wspUrl = `${whatsappUrl}${whatsappMessage}`;
 
@@ -27,7 +27,7 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
                         className="size-full object-cover transition duration-500 group-hover:scale-105"
                     />
                     {!product.available && (
-                        <span className="absolute uppercase top-2 right-2 z-10 px-2 py-2 text-sm font-black tracking-wide bg-red-600 text-white rounded-4xl">
+                        <span className="absolute top-2 right-2 z-10 px-4 py-2 text-sm font-black  bg-red-100 text-red-600 rounded-4xl">
                             No disponible
                         </span>
                     )}

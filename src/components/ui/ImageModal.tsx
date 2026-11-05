@@ -117,7 +117,7 @@ export function ImageModal({
 				>
 					<button
 						onClick={onClose}
-						className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 p-5 bg-primary/50 text-white rounded-full hover:bg-primary/70 transition sm:top-4 sm:right-4 sm:left-auto sm:bottom-auto sm:translate-x-0"
+						className="absolute bottom-4 left-1/2 -translate-x-1/2 -translate-y-10 z-10 p-5 bg-primary/50 text-white rounded-full hover:bg-primary/70 transition sm:top-4 sm:right-4 sm:left-auto sm:bottom-auto sm:translate-x-0 sm:translate-y-0"
 						aria-label="Cerrar imagen"
 					>
 						<Icon name="close" className="size-6" />
