@@ -21,7 +21,7 @@ export function AboutUs() {
 			try {
 				const data = await aboutUsApi.getAboutUs();
 				setContent(data?.content || "");
-				setImageUrl(data?.imageUrl || placeholderFallback);
+				setImageUrl(data?.imageUrl || "");
 			} catch (e) {
 				console.error(`Error:`, e);
 			} finally {

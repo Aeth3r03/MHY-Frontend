@@ -10,6 +10,7 @@ import { whatsappUrl } from "../../utils/whatsapp";
 import { ImageModal } from "../../components/ui/ImageModal";
 import { useCategories } from "../../hooks/useCategories";
 import { logAnalyticsEvent } from "../../services/firebase";
+import Markdown from "react-markdown";
 
 export function ProductDetail() {
 	const [loading, setLoading] = useState(true);
@@ -131,9 +132,9 @@ export function ProductDetail() {
 							</div>
 						</div>
 
-						<p className="mt-7 text-base leading-7 text-foreground/65">
-							{product.description}
-						</p>
+						<div className="prose text-base text-foreground/65 mt-7 max-w-none">
+							<Markdown>{product.description}</Markdown>
+						</div>
 
 						<a
 							href={wspUrl}

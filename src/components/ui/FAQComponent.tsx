@@ -40,7 +40,7 @@ export function FAQCompontent({ items, title, className = ""}: FAQprops) {
                                     </dt>
                                     <Icon name="chevron" className="size-5 text-foreground/40 shrink-0 ml-4 transition-transform duration-300 group-open:rotate-90" aria-hidden="true" />
                                 </summary>
-                                <dd className="px-6 pb-5 text-foreground/40 leading-7 border-t border-foreground/5">
+                                <dd className="px-6 pb-5 pt-4 text-foreground/40 leading-7 border-t border-foreground/5">
                                     <p className="text-base leading-7 text-foreground/70">
                                         {item.answer}
                                     </p>

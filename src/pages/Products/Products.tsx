@@ -138,7 +138,7 @@ export function Products() {
                         </div>
                     </div>
 
-                    <div className="mt-7 grid gap-8 lg:grid-cols-[15rem_1fr] xl:grid-cols-[16rem_1fr}">
+                    <div className="mt-7 grid gap-8 lg:grid-cols-[18rem_1fr] xl:grid-cols-[19rem_1fr}">
                         <aside className="col-span-1 hidden self-start rounded-3xl bg-white p-5 shadow-soft lg:sticky lg:top-28 lg:block">
                             <div className="flex items-center justify-between mb-4">
                                 <h3 className="text-sm font-black">Filtros</h3>

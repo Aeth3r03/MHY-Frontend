@@ -83,7 +83,7 @@ export function TermsDialog({
 						id="terms-dialog-title"
 						className="text-sm font-black uppercase tracking-[0.14em]"
 					>
-						Términos de Servicio
+						Condiciones de Compra
 					</h2>
 				</div>
 				<p className="text-sm lg:text-base leading-6 text-foreground/65 mb-4 shrink-0">
@@ -94,15 +94,11 @@ export function TermsDialog({
 					{[
 						[
 							"Pagos y reservas",
-							"Los pedidos se confirman al acordar y verificar el método de pago.",
+							"Los pedidos se confirman al acordar y verificar el método de pago. Despues de esto no se puede cancelar.",
 						],
 						[
 							"Entregas",
 							"Tiempo y costo dependen de la ubicacion; se informan antes de confirmar",
-						],
-						[
-							"Cambios",
-							"Aplican segun estado y tipo de producto. Conserva tu comprobante.",
 						],
 						[
 							"Garantías",
@@ -119,6 +115,13 @@ export function TermsDialog({
 							</div>
 						</div>
 					))}
+				</div>
+
+				<div className="items-center justify-center">
+					<p className="text-sm text-center lg:text-xl leading-6 text-foreground/65 mb-4 shrink-0">Tip Importante</p>
+					<div className="text-sm lg:text-base mb-6 bg-accent/40 rounded-2xl py-4 pl-4 pr-4">
+						<p className="text-base text-foreground/65">Para hacer una compra, solo le das click al boton de contactar</p>
+					</div>
 				</div>
 
 				<div className="flex gap-3 shrink-0 pt-4 border-t border-foreground/10">

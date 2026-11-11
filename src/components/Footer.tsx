@@ -9,7 +9,7 @@ export function Footer() {
 			<section className="bg-footer-top text-white">
 				<div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 lg:px-8">
 					<div>
-						<p className="text-xs font-black uppercase tracking-[0.2em] text-[#f0b938]">
+						<p className="text-xs font-black uppercase tracking-[0.2em] text-accent">
 							La experiencia MultiHogar Yadita
 						</p>
                         <h2 className="mt-4 max-w-md font-serif text-4xl font-bold leading-tight sm:text-5xl">
@@ -18,19 +18,19 @@ export function Footer() {
 					</div>
                     <div className="grid gap-3 sm:grid-cols-3">
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                            <Icon name="truck" className="size-6 text-[#f0b938]" />
+                            <Icon name="truck" className="size-6 text-accent" />
                             <h3 className="mt-6 font-black">Entrega mediante CargoTrans</h3>
                             <p className="mt-1 text-sm text-white/55">Coordinamos contigo</p>
                         </div>
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                            <Icon name="shield" className="size-6 text-[#f0b938]" />
+                            <Icon name="shield" className="size-6 text-accent" />
                             <h3 className="mt-6 font-black">Compra segura</h3>
                             <p className="mt-1 text-sm text-white/55">Información clara</p>
                         </div>
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                            <Icon name="headset" className="size-6 text-[#f0b938]" />
+                            <Icon name="headset" className="size-6 text-accent" />
                             <h3 className="mt-6 font-black">Te ayudamos</h3>
-                            <p className="mt-1 text-sm text-white/55">Puedes contactarnos al +505 82708806</p>
+                            <p className="mt-1 text-sm text-white/55">Puedes contactarnos al +505 7782 1532</p>
                         </div>
                     </div>
 				</div>

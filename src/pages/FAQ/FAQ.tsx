@@ -16,25 +16,25 @@ export function FAQ() {
 			id: "1",
 			question: "¿Cómo puedo realizar una compra?",
 			answer:
-				"Puedes explorar nuestro catálogo, seleccionar los productos que deseas y contactarnos por WhatsApp para confirmar tu pedido.",
+				"Simplemente exploras el catálogo o buscas el producto que desees, le das click al boton contactar y automáticamente te llevará a WhatsApp (No elimines el link, nos ayudará a identificar mejor el producto).",
 		},
 		{
 			id: "2",
 			question: "¿Cuáles son los métodos de pago disponibles?",
 			answer:
-				"Aceptamos pagos en efectivo y transferencias bancarias. También puedes realizar un adelanto del 50% de tu compra.",
+				"Los métodos de pagos actuales disponibles es por Billetera Móvil. Tambien en efectivo si vienes a nuestro local.",
 		},
 		{
 			id: "3",
 			question: "¿Realizan entregas a domicilio?",
 			answer:
-				"Sí, realizamos entregas mediante nuestro servicio de transporte asociado. El costo depende de tu ubicación.",
+				"Sí, realizamos entregas mediante CargoTrans. El costo depende de tu ubicación.",
 		},
 		{
 			id: "4",
 			question: "¿Puedo cancelar un pedido?",
 			answer:
-				"Puedes solicitar la cancelación antes de que el pedido haya sido preparado o enviado.",
+				"Despues de haber confirmado la compra del producto y haber pagado, no es posible cancelar el pedido.",
 		},
 		{
 			id: "5",
@@ -44,21 +44,9 @@ export function FAQ() {
 		},
 		{
 			id: "6",
-			question: "¿Los productos tienen garantía?",
-			answer:
-				"Algunos productos cuentan con garantía del fabricante. Puedes consultar las condiciones específicas antes de comprar.",
-		},
-		{
-			id: "7",
-			question: "¿Puedo modificar mi pedido?",
-			answer:
-				"Sí, siempre que el pedido todavía no haya sido preparado para su entrega.",
-		},
-		{
-			id: "8",
 			question: "¿Cómo puedo contactar con atención al cliente?",
 			answer:
-				"Puedes comunicarte con nosotros mediante WhatsApp o nuestras redes sociales.",
+				"Puedes contactarnos al 8270 8806",
 		},
 	];
 

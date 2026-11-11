@@ -60,7 +60,7 @@ export function TermsPage() {
             </h1>
         </div>
         <p className="text-sm leading-6 text-foreground/65 mb-8">
-            Para evitar problemas o confusiones, lee las condiciones de servicios siguientes
+            Para evitar problemas o confusiones, lee las condiciones de compras siguientes
         </p>
         <div className="prose prose-sm prose-foreground max-w-none">
             <Markdown components={{

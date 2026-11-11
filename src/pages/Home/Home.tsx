@@ -3,7 +3,6 @@ import { Icon } from "../../components/Icon";
 import { ProductCard } from "../../components/ui/ProductCard";
 import { TermsDialog } from "../../components/ui/TermsDialog";
 import { Link, useNavigate } from "react-router-dom";
-import { LoadingBody } from "../../components/ui/LoadingBody";
 import { usePaginatedProducts } from "../../hooks/usePaginatedProducts";
 import { useCategories } from "../../hooks/useCategories";
 import { logAnalyticsEvent } from "../../services/firebase";
@@ -105,7 +104,7 @@ export function Home() {
 							</div>
 							<div className="px-5 py-4">
 								<p className="font-black">
-									Antes de comprar, lee nuestros Términos de Servicio
+									Antes de comprar, lee nuestras Condiciones de Compra
 								</p>
 								<p className="mt-1 text-sm leading-6 text-foreground/70">
 									Conoce claramente las condiciones de pago, entrega, cambios y
@@ -116,7 +115,7 @@ export function Home() {
 								className="group mx-5 mb-5 flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-black text-white transition hover:bg-primary/90 md:mb-0 md:mr-5 md:whitespace-nowrap"
 								onClick={handleViewTerms}
 							>
-								Leer los Términos de Servicio
+								Leer las Conciciones de Compra
 								<Icon
 									name="arrow"
 									className="size-4 transition-transform group-hover:translate-x-1"
